@@ -10,5 +10,18 @@ services:
       POSTGRES_DB: jobdb
     networks:
       - jobnet
+  app:
+    image: node:22
+    working_dir: /app
+    volumes:
+      - ./workspace/job-service-api:/app
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    command: yarn start:dev
+    tty: true
+    networks:
+        - jobnet
 networks:
   jobnet:
